@@ -166,7 +166,7 @@
                 siteEl.className = 'side-link';
                 const iconUrl = `https://www.google.com/s2/favicons?domain=${site.url}&sz=64`;
                 siteEl.innerHTML = `
-                    <a href="${site.url}" target="_blank" style="text-decoration:none; display:flex; align-items:center; gap:15px; width:100%;">
+                    <a href="${site.url}" target="_self" style="text-decoration:none; display:flex; align-items:center; gap:15px; width:100%;">
                         <img src="${iconUrl}" class="logo-img">
                         <span>${site.name}</span>
                     </a>
