@@ -146,17 +146,18 @@
             document.getElementById('date-day').textContent = days[now.getDay()];
         }
 
-        // --- Metni Sona Odaklama Fonksiyonu ---
-        function focusSearch() {
+        // --- Arama Çubuğuna Zorla Odaklanma ---
+        function forceFocusSearch() {
             const searchInput = document.getElementById('main-search');
             if (searchInput) {
-                // Hafif bir gecikme Firefox'un varsayılan odaklanma davranışını ezer
+                // 50ms gecikme Firefox'un adres çubuğu odağını çalmasını engeller
                 setTimeout(() => {
                     searchInput.focus();
+                    // Metin varsa imleci sona atar
                     const val = searchInput.value;
                     searchInput.value = '';
                     searchInput.value = val;
-                }, 10);
+                }, 50); 
             }
         }
 
@@ -257,16 +258,20 @@
             return icons.sun;
         }
 
-        // Initialize
+        // --- Başlatıcılar ---
         setInterval(updateDashboard, 1000);
         updateDashboard();
         renderSites();
         fetchWeather();
+        
         const savedTodos = JSON.parse(localStorage.getItem('dashboard-todos') || "[]");
         savedTodos.forEach(addTask);
 
-        // Sayfa yüklendiğinde imleci sona al
-        window.onload = focusSearch;
+        // Hem yüklenmede hem de görünürlük değişiminde odağı zorla
+        window.onload = forceFocusSearch;
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') forceFocusSearch();
+        });
     </script>
 </body>
 </html>
